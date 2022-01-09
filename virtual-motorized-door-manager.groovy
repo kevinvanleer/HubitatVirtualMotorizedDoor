@@ -13,10 +13,10 @@ preferences {
     page(name: 'mainPage', title: 'Motorized Doors', install: true, uninstall: true) {
         section {
             app(name: 'virtualMotorizedDoor',
-      appName: 'Virtual Motorized Door',
-      namespace: 'kvl',
-      title: 'New Door',
-      multiple: true)
+            appName: 'Virtual Motorized Door',
+            namespace: 'kvl',
+            title: 'New Door',
+            multiple: true)
         }
     }
 }

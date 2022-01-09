@@ -17,7 +17,7 @@
             "enabled": false
         },
         "formatting.Indentation": {
-            "spacesPerIndentLevel": 2,
+            "spacesPerIndentLevel": 4,
             "severity": "info"
         }
     }

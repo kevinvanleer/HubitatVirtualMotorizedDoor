@@ -13,41 +13,41 @@ def open() {
     log.debug(state)
 
     switch (state.door) {
-    case 'open':
+        case 'open':
             log.debug('The door is already open')
             break
-    case 'opening':
+        case 'opening':
             log.debug('The door is already opening')
             break
-    case 'closing':
+        case 'closing':
             activateDoor()
-    case 'closed':
+        case 'closed':
             log.debug('opening')
             activateDoor()
             break
-    default:
-        activateDoor()
+        default:
+            activateDoor()
     }
 }
 
 def close() {
     log.debug 'close()'
     switch (state.door) {
-    case 'closed':
+        case 'closed':
             log.debug('The door is already closed')
             break
-    case 'closing':
+        case 'closing':
             log.debug('The door is already closing')
             break
-    case 'opening':
+        case 'opening':
             log.debug('stopping')
             activateDoor()
-    case 'open':
+        case 'open':
             log.debug('closing')
             activateDoor()
             break
-    default:
-      activateDoor()
+        default:
+            activateDoor()
     }
 }
 

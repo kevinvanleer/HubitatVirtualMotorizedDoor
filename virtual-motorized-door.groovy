@@ -125,6 +125,6 @@ private initialize() {
         synchronize()
         log.debug('init done')
     } else {
-        log.error("Virtual Motorized Door device should by of type pmckinnon/'Virtual Motorized Door'")
+        log.error("Virtual Motorized Door device should by of type kvl/'Virtual Motorized Door'")
     }
 }
