@@ -1,0 +1,130 @@
+definition(
+  name: 'Virtual Motorized Door',
+  namespace: 'kvl',
+  author: 'kevin.vanleer@gmail.com',
+  description: 'A virtual device for activating and monitoring any motorized door. The door should be activated by a monentary\
+                switch and use momentary switches to monitor open and closed state.',  
+  category: 'Convenience',
+  parent: 'kvl:Virtual Motorized Door Manager',
+  iconUrl: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact.png',
+  iconX2Url: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact@2x.png'
+)
+
+preferences {
+    section('Motorized door closed sensor') {
+        input 'closedSensor', 'capability.switch',
+    title: 'Motorized Door Closed Sensor',
+    required: true
+    }
+    section('Motorized door open sensor') {
+        input 'openSensor', 'capability.switch',
+    title: 'Motorized Door Open Sensor',
+    required: true
+    }
+    section('Motorized door door motor switch') {
+        input 'doorMotorSwitch', 'capability.switch',
+    title: 'Motorized Door Door Motor Switch',
+    required: true
+    }
+    section('Virtual motorized door device') {
+        input 'motorizedDoor', 'capability.switch',
+    title: 'Virtual Motorized Door',
+    required: true
+    }
+}
+
+def installed() {
+    log.debug ("Virtual motorized door installed")
+    initialize()
+}
+
+def updated() {
+    log.debug ("Virtual motorized door updated")
+    unsubscribe()
+    initialize()
+    log.debug("update done")
+}
+
+private initialize() {
+  log.debug("initialize")
+    state = ['door':'closed','switch':'off'] //causes null pointer exception
+    //state = [:]
+    if (motorizedDoor.supportedCommands.find { it.name == 'setVirtualMotorizedState' }) {
+        subscribe(doorMotorSwitch, 'switch', isActuatedHandler)
+        subscribe(openSensor, 'switch', isOpenHandler)
+        subscribe(closedSensor, 'switch', isClosedHandler)
+        subscribe(motorizedDoor, 'door', motorizedDoorControlHandler)
+        subscribe(motorizedDoor, 'switch', motorizedDoorSwitchHandler)
+
+        log.debug(motorizedDoor.capabilities)
+
+        state.door = closedSensor.currentSwitch == 'on' ? 'closed' : openSensor.currentSwitch == 'on' ? 'open' : 'unknown'
+        state.switch = doorMotorSwitch.currentSwitch
+        log.debug(state)
+
+        synchronize()
+        log.debug("init done")
+}
+  else {
+        log.error("Virtual Motorized Door device should by of type pmckinnon/'Virtual Motorized Door'")
+  }
+}
+
+private synchronize() {
+    log.debug "synchronize, current: $state"
+
+    motorizedDoor.update([door: state.door, switch: state.switch])
+    log.debug("sync done")
+}
+
+def isOpenHandler(evt) {
+    log.debug("isOpenHandler: $evt")
+    state.door = (evt.value == 'on') ? 'open' : 'closing'
+    onSensorChanged()
+}
+
+def isClosedHandler(evt) {
+    log.debug("isClosedHandler: $evt")
+    state.door = (evt.value == 'on') ? 'closed' : 'opening'
+    onSensorChanged()
+}
+
+private onSensorChanged() {
+    log.debug("onSensorChanged(): $state")
+    synchronize()
+}
+
+def motorizedDoorControlHandler(evt) {
+    log.debug "motorizedDoorControlHandler($evt.value)"
+    switch (evt.value) {
+      case 'open':
+      case 'close':
+            //activateDoorMotor()
+            break      
+      default:
+      log.debug('unknown door event')
+    }
+}
+
+def motorizedDoorSwitchHandler(evt) {
+    log.debug "motorizedDoorSwitchHandler($evt.value), current: ${state.switch}"
+
+    if (evt.value == 'on') {
+        log.debug('Triggering door action')
+        activateDoorMotor()
+        state.switch = evt.value
+  } else {
+        log.debug('DoorMotor reset')
+    }
+}
+
+def isActuatedHandler(evt) {
+    log.debug("got doorMotor switch event: ${evt}")
+        state.switch = evt.value
+        synchronize()
+}
+
+private activateDoorMotor() {
+    log.debug 'activateDoorMotor()'
+    doorMotorSwitch.on()
+}
