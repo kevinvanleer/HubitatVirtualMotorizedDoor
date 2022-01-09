@@ -1,12 +1,12 @@
 definition(
-  name: 'Virtual Motorized Door Manager',
-  namespace: 'kvl',
-  author: 'kevin.vanleer@gmail.com',
-  description: "Manages Instances of 'Virtual Motorized Door'",
-  category: 'Convenience',
-  singleInstance: true,
-  iconUrl: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact.png',
-  iconX2Url: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact@2x.png'
+    name: 'Virtual Motorized Door Manager',
+    namespace: 'kvl',
+    author: 'kevin.vanleer@gmail.com',
+    description: "Manages Instances of 'Virtual Motorized Door'",
+    category: 'Convenience',
+    singleInstance: true,
+    iconUrl: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact.png',
+    iconX2Url: 'https://s3.amazonaws.com/smartapp-icons/Meta/garage_contact@2x.png'
 )
 
 preferences {

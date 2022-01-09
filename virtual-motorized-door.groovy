@@ -78,12 +78,12 @@ def motorizedDoorSwitchHandler(evt) {
         activateDoorMotor()
         state.switch = evt.value
     } else {
-        log.debug('DoorMotor reset')
+        log.debug('Door motor reset')
     }
 }
 
 def isActivatedHandler(evt) {
-    log.debug("got doorMotor switch event: ${evt}")
+    log.debug("got door motor switch event: ${evt}")
     state.switch = evt.value
     synchronize()
 }
