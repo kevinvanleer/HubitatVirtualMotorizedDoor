@@ -28,7 +28,7 @@ preferences {
         required: true
     }
     section('Virtual motorized door device') {
-        input 'motorizedDoor', 'capability.switch',
+        input 'motorizedDoor', 'capability.garageDoorControl',
         title: 'Virtual Device (type: Virtual Motorized Door)',
         required: true
     }
