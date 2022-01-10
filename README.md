@@ -1,4 +1,4 @@
-#Motorized Door
+# Motorized Door
 
 Driver and app for interacting with a motorized door using the Hubitat Elevation Smart Home Hub. The virtual devices uses three switches to control and monitor the door. The switches should be wired as follows:
 
@@ -11,13 +11,13 @@ Originally designed and developed for a Genie Pro Screw Driver garage door from 
 This software was inspired by "Virtual Garage Door" published by Patrick McKinnon in 2017 and ported to Hubitat Elevation by D Canfield and served as the basis for the implementation:
 https://community.hubitat.com/t/release-virtual-garage-door-app-driver-st-port/15668. Without this code it would have been much more difficult to figure out the hubitat driver and application interfaces. It is the position of the author that the changes here are significant enough to call this different software.
 
-#Developer notes
+# Developer notes
 
 The learning curve for Hubitat Elevation apps and drivers is fairly steep, given the lack of documentation. One important note is that the programming interface seems to have been derived from SmartThings as there seem to be many apps and drivers ported from SmartThings. However, not all SmartThings (ST) features are supported by Hubitat Elevation (HE). Of these, "tiles" is the most notable unsupported features. HE does not allow users to define custom dashboard tiles, and must conform to the "capabilities" of the standard tiles. https://docs.hubitat.com/index.php?title=Driver_Capability_List
 
 Motorized door consists of three parts, this design is from the original "Virtual Garage Door" published by Patrick McKinnon. The driver interacts with the three switches, monitoring the state of the door position sensors and activating the door motor switch. The app integrates the three switches into a single garage door control state model that can be controlled with a "Garage Door (Control)" tile. The manager app organizes instantiations of motorized door.
 
-#LICENSE
+# LICENSE
 
 Copyright 2022 Kevin Van Leer <kevin.vanleer@gmail.com> 
 kevinvanleer.com
