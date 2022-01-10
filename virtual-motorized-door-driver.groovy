@@ -55,16 +55,16 @@ def on() {
     log.debug('VGD on()')
     log.debug(state)
     switch (state.door) {
-    case 'open':
-    case 'opening':
+        case 'open':
+        case 'opening':
             close()
             break
-    case 'closed':
-    case 'closing':
+        case 'closed':
+        case 'closing':
             open()
             break
-    default:
-    activateDoor()
+        default:
+            activateDoor()
     }
 }
 
@@ -78,11 +78,19 @@ def update(newState) {
         log.debug("update($newState)")
         state = [ *:state, *:newState ]
         log.debug("update::updated state: $state")
-        sendEvent(name: 'door', value: state.door)
-        sendEvent(name: 'switch', value: state.switch)
+        changeDoorSwitchState(state.switch)
+        broadcastDoorState(state.door)
     }
 }
 
 private activateDoor() {
-    sendEvent(name: 'switch', value: 'on')
+    changeDoorSwitchState('on')
+}
+
+private changeDoorSwitchState(newState) {
+    sendEvent(name: 'switch', value: newState)
+}
+
+private broadcastDoorState(newState) {
+    sendEvent(name: 'door', value: newState)
 }

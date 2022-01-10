@@ -62,8 +62,16 @@ def motorizedDoorControlHandler(evt) {
     log.debug "motorizedDoorControlHandler($evt.value)"
     switch (evt.value) {
         case 'open':
-        case 'close':
-            //activateDoorMotor()
+            log.debug('door is open')
+            break
+        case 'closed':
+            log.debug('door is closed')
+            break
+        case 'opening':
+            log.debug('door is opening (inferred)')
+            break
+        case 'closing':
+            log.debug('door is closing (inferred)')
             break
         default:
             log.debug('unknown door event')
@@ -76,7 +84,6 @@ def motorizedDoorSwitchHandler(evt) {
     if (evt.value == 'on') {
         log.debug('Triggering door action')
         activateDoorMotor()
-        state.switch = evt.value
     } else {
         log.debug('Door motor reset')
     }
